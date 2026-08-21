@@ -139,4 +139,4 @@ app.listen(PORT, () => {
   console.log(`Solstice kiosk service listening on port ${PORT}`);
 });
 
-module.exports = { app, attendees };
+module.exports = app;
