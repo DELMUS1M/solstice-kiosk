@@ -1,5 +1,8 @@
 const express = require('express');
 const crypto = require('crypto');
+const path = require('path');
+const express = require('express');
+const crypto = require('crypto');
 const { enqueuePrintJob } = require('./queue-simulator');
 
 const app = express();
@@ -130,6 +133,9 @@ app.post('/webhooks/print-complete', (req, res) => {
   return res.status(200).json({ received: true });
 });
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 app.get('/api/attendees', (req, res) => {
   res.json(Array.from(attendees.values()));
 });
