@@ -4,22 +4,35 @@
   <meta charset="UTF-8">
   <title>Solstice Events - Check-In Kiosk</title>
   <style>
-    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px; }
-    h1 { font-size: 1.4rem; }
-    .row { display: flex; align-items: center; justify-content: space-between; border: 1px solid #ddd; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
-    .status { font-weight: 600; padding: 4px 10px; border-radius: 999px; font-size: 0.85rem; }
-    .not_checked_in { background: #eee; color: #555; }
-    .print_pending { background: #fff3cd; color: #8a6d3b; }
-    .checked_in { background: #d4edda; color: #256029; }
-    button { padding: 6px 14px; border-radius: 6px; border: 1px solid #333; background: #fff; cursor: pointer; }
-    button:hover { background: #f2f2f2; }
+    body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 16px; background: #f9fafb; }
+    h1 { font-size: 1.6rem; color: #111827; }
+    .card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 24px; }
+    .row { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f3f4f6; padding: 16px 0; }
+    .row:last-child { border-bottom: none; }
+    .status { font-weight: 600; padding: 6px 12px; border-radius: 999px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+    .not_checked_in { background: #f3f4f6; color: #4b5563; }
+    .print_pending { background: #fef08a; color: #854d0e; animation: pulse 2s infinite; }
+    .checked_in { background: #bbf7d0; color: #166534; }
+    button { padding: 8px 16px; border-radius: 8px; border: none; background: #2563eb; color: white; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    button:hover { background: #1d4ed8; }
+    button:disabled { background: #9ca3af; cursor: not-allowed; }
+    .logs { background: #1f2937; color: #34d399; padding: 16px; border-radius: 8px; font-family: monospace; font-size: 0.85rem; height: 200px; overflow-y: auto; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
   </style>
 </head>
 <body>
-  <h1>Solstice Events - Check-In Kiosk</h1>
-  <p>Scan a badge (click "Scan") to trigger a print job. Status stays <em>pending</em> until the vendor's webhook confirms the print actually completed.</p>
-  <div id="list"></div>
+  <h1>Solstice Events - Kiosk (Async Pivot)</h1>
+  <p>App publishes a print job, reflects a pending state, and waits for the vendor webhook callback.</p>
+  
+  <div class="card" id="list">
+    <!-- Attendees will load here -->
+  </div>
 
+  <h3>Live Webhook & Event Logs</h3>
+  <div class="logs" id="logs">System initialized. Awaiting badge scans...<br></div>
+
+  <!-- We load a browser crypto library to simulate the vendor's signature -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
