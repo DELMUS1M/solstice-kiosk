@@ -133,9 +133,6 @@ app.post('/webhooks/print-complete', (req, res) => {
   return res.status(200).json({ received: true });
 });
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
 app.get('/api/attendees', (req, res) => {
   res.json(Array.from(attendees.values()));
 });
@@ -144,5 +141,13 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Solstice kiosk service listening on port ${PORT}`);
 });
+
+module.exports = app;
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Solstice kiosk service listening on port ${PORT}`);
+  });
+}
 
 module.exports = app;
